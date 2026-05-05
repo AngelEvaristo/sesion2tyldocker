@@ -17,4 +17,8 @@ jobs:
           docker build -t mi-app:1.0.0 .
           docker images
           docker ps
+          docker run -d --name mi-contenedor -p 8080:8080 mi-app:1.0.0
+          docker ps
+          sleep 10
+
                   
