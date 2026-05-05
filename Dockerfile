@@ -3,7 +3,7 @@ WORKDIR /app
 
 COPY *.sln ./
 COPY MyMinimalApi/*.csproj ./MyMinimalApi/
-COPY MyMinimalApi.Test/*.csproj ./MyMinimalApi.Test/
+COPY MyMinimalApi.Tests/*.csproj ./MyMinimalApi.Tests/
 RUN dotnet restore
 
 COPY . ./
