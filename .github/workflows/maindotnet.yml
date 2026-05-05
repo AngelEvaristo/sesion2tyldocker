@@ -1,0 +1,20 @@
+name: Build and push image DOTNET
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+
+  build-and-push:
+    name: Build and push DOTNET
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: Build and validate
+        run: |
+          echo "docker build"
+          docker build -t mi-app:1.0.0 .
+          docker images
+          docker ps
+                  
