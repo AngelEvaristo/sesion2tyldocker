@@ -37,28 +37,48 @@ jobs:
           docker ps
           echo "DOCKER PS -a 2"
           docker ps -a      
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Configure ACR Credentials
+        uses: azure/docker-login@v2
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-2
-      
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-      
+          login-server: azcrtecylabs2.azurecr.io
+          username: ${{ secrets.AZURE_ACR_ACCESS_USER }}
+          password: ${{ secrets.AZURE_ACR_ACCESS_PASS }}
+
       - name: Build, Tag and Push image ECR
         id: build-image
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ecrtecylabs2
+          ACR_REGISTRY: azcrtecylabs2.azurecr.io
+          ACR_REPOSITORY: acrtecylabsrepo2
           IMAGE_TAG: 1.0.0
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build -t $ACR_REGISTRY/$ACR_REPOSITORY:$IMAGE_TAG .
           docker images
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG 
+          docker push $ACR_REGISTRY/$ACR_REPOSITORY:$IMAGE_TAG 
+
+
+      # - name: Configure AWS Credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: us-east-2
+      
+      # - name: Login to Amazon ECR
+      #   id: login-ecr
+      #   uses: aws-actions/amazon-ecr-login@v1
+      
+      # - name: Build, Tag and Push image ECR
+      #   id: build-image
+      #   env:
+      #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      #     ECR_REPOSITORY: ecrtecylabs2
+      #     IMAGE_TAG: 1.0.0
+      #   run: |
+      #     docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+      #     docker images
+      #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG 
+
+
 
 
                   
