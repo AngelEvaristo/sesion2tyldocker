@@ -19,7 +19,11 @@ jobs:
           docker build -t mi-app:1.0.0 .
           echo "DOCKER IMAGES 1"
           docker images
-          echo "DOCKER PS"
-          docker ps          
+          echo "DOCKER PS 0"
+          docker ps     
+          echo "DOCKER RUN"
+          docker run -d --name mi-contendor -p 8081:8081 -e SERVER_ADDRESS=0.0.0.0 mi-app:1.0.0
+          echo "DOCKER PS 1"
+          docker ps
 
                   
