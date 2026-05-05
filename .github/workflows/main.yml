@@ -37,10 +37,6 @@ jobs:
           docker ps
           echo "DOCKER PS -a 2"
           docker ps -a      
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1              
-        with:
-          aws-access-key
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
